@@ -1,0 +1,54 @@
+app:
+    build: docker
+    container_name: app_open_orchestra
+    ports:
+        - 80:80
+        - 443:443
+    volumes:
+        - "./:/var/www/html"
+    links:
+        - mongo
+        - redis
+        - elastica
+        - varnish
+mongo:
+    image: mongo:2.6
+    container_name: mongo_open_orchestra
+    ports:
+      - 27017:27017
+redis:
+    image: redis:3.0.6-alpine
+    container_name: redis_open_orchestra
+dockerui:
+    image: dockerui/dockerui
+    container_name: dockerui_open_orchestra
+    restart: always
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+        - 5000:9000
+varnish:
+    image: million12/varnish
+    container_name: varnish_open_orchestra
+    ports:
+        - 6081:80
+elastica:
+    image: elasticsearch
+    container_name: elasticsearch_open_orchestra
+    ports:
+        - 8000:80
+mongo-express:
+    image: levino/mongo-express
+    container_name: mongoexpress_open_orchestra
+    ports:
+        - 8081:8081
+    links:
+        - mongo:mongo
+redis-commander:
+    image: tenstartups/redis-commander
+    container_name: rediscommander_open_orchestra
+    links:
+        - redis:redis
+    command: --redis-host redis
+    ports:
+        - 8082:8081
