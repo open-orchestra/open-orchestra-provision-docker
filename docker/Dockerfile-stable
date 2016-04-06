@@ -1,0 +1,8 @@
+FROM openorchestra/open-orchestra:oo-apache2.4-php5.6
+
+COPY ./vhosts-stable.conf /etc/apache2/sites-available/vhosts.conf
+COPY ./load-stable.sh /load.sh
+
+RUN a2ensite vhosts.conf
+
+CMD ["/run.sh"]

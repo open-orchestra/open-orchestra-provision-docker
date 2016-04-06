@@ -1,7 +1,7 @@
 FROM openorchestra/open-orchestra:oo-apache2.4-php5.6
 
-COPY ./vhosts.conf /etc/apache2/sites-available/
-COPY ./load.sh /
+COPY ./vhosts-master.conf /etc/apache2/sites-available/vhosts.conf
+COPY ./load-master.sh /load.sh
 
 RUN a2ensite vhosts.conf
 
