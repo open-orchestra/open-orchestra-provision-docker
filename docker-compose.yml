@@ -1,5 +1,5 @@
 dockerui:
-    image: dockerui/dockerui
+    image: abh1nav/dockerui
     container_name: dockerui_open_orchestra
     restart: always
     volumes:
