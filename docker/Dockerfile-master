@@ -3,6 +3,8 @@ FROM openorchestra/open-orchestra:oo-apache2.4-php5.6
 COPY ./vhosts-master.conf /etc/apache2/sites-available/vhosts.conf
 COPY ./load-master.sh /load.sh
 
+RUN echo "xdebug.max_nesting_level = 1000" > /etc/php5/apache2/conf.d/20-xdebug.ini
+
 RUN a2ensite vhosts.conf
 
 CMD ["/run.sh"]
