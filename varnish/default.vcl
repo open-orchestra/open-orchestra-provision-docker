@@ -105,6 +105,10 @@ sub vcl_recv {
         return (pass);
     }
 
+    #=== Pass when private block ===#
+    if (req.url ~ ".*[?&]cache=private.*") {
+        return (pass);
+    }
 
     #=== Remove all cookies ===#
     unset req.http.Cookie;
