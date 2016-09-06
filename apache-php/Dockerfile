@@ -34,6 +34,7 @@ RUN a2ensite front-openorchestra.conf
 RUN a2ensite media-openorchestra.conf
 
 RUN usermod -u 1000 www-data
+RUN chown www-data:www-data /var/www
 
 EXPOSE 80
 
