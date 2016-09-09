@@ -8,23 +8,18 @@ services:
           - ../open-orchestra-front-demo/:/var/www/front-openorchestra
           - ../open-orchestra-media-demo/:/var/www/media-openorchestra
           - ../uploaded-files:/var/www/uploaded-files
-      tty: true
       container_name: oo_code
 
   oo_mongo:
     image: mongo:3.0
-    networks:
-        - db
     ports:
       - 27017:27017
     container_name: oo_mongo
+    volumes:
+        - ../data/db:/data/db
 
   oo_apache_php:
       build: apache-php
-      networks:
-          - db
-          - els
-          - varnish
       volumes_from:
           - oo_code
       ports:
@@ -33,18 +28,16 @@ services:
 
   oo_elasticsearch:
       build: elasticsearch
-      networks:
-          - els
       ports:
           - 9200:9200
       container_name: oo_elasticsearch
+      volumes:
+          - ../data/els:/usr/share/elasticsearch/data
 
   oo_varnish:
       image: million12/varnish
       volumes:
         - ./varnish/default.vcl:/etc/varnish/default.vcl
-      networks:
-          - varnish
       environment:
         - VARNISHD_PARAMS=-a :6081
       expose:
@@ -52,8 +45,3 @@ services:
       ports:
         - 6081:6081
       container_name: oo_varnish
-
-networks:
-  db: {}
-  varnish: {}
-  els: {}

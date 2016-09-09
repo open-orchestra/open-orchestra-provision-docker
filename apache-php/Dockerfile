@@ -36,6 +36,8 @@ RUN a2ensite media-openorchestra.conf
 RUN usermod -u 1000 www-data
 RUN chown www-data:www-data /var/www
 
+ENV SYMFONY_WITH_DOCKER 1
+
 EXPOSE 80
 
 WORKDIR /var/www
