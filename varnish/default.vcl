@@ -36,7 +36,7 @@ sub vcl_recv {
     }
 
     #=== Pass when request for admin ===#
-    if(req.http.host ~ "(admin.openorchestra.1-2.dev)") {
+    if(req.http.host ~ "(admin.openorchestra.2-0.dev)") {
         set req.backend_hint = back.backend();
 
         return (pass);
