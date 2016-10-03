@@ -12,9 +12,12 @@ RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN php -r "unlink('composer-setup.php');"
 
 
-COPY ./vhosts/back-openorchestra.conf /etc/apache2/sites-available/back-openorchestra.conf
-COPY ./vhosts/front-openorchestra.conf /etc/apache2/sites-available/front-openorchestra.conf
-COPY ./vhosts/media-openorchestra.conf /etc/apache2/sites-available/media-openorchestra.conf
+COPY ./vhosts/back-openorchestra.conf /etc/apache2/sites-available/back-openorchestra-12.conf
+COPY ./vhosts/front-openorchestra.conf /etc/apache2/sites-available/front-openorchestra-12.conf
+COPY ./vhosts/media-openorchestra.conf /etc/apache2/sites-available/media-openorchestra-12.conf
+COPY ./vhosts/back-openorchestra.conf /etc/apache2/sites-available/back-openorchestra-20.conf
+COPY ./vhosts/front-openorchestra.conf /etc/apache2/sites-available/front-openorchestra-20.conf
+COPY ./vhosts/media-openorchestra.conf /etc/apache2/sites-available/media-openorchestra-20.conf
 
 COPY ./ini/mongo.ini /etc/php5/mods-available/
 COPY ./ini/imagick.ini /etc/php5/mods-available/
