@@ -12,9 +12,10 @@ RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN php -r "unlink('composer-setup.php');"
 
 
-COPY ./vhosts/back-openorchestra.conf /etc/apache2/sites-available/back-openorchestra-12.conf
-COPY ./vhosts/front-openorchestra.conf /etc/apache2/sites-available/front-openorchestra-12.conf
-COPY ./vhosts/media-openorchestra.conf /etc/apache2/sites-available/media-openorchestra-12.conf
+COPY ./vhosts/back-openorchestra-12.conf /etc/apache2/sites-available/back-openorchestra-12.conf
+COPY ./vhosts/front-openorchestra-12.conf /etc/apache2/sites-available/front-openorchestra-12.conf
+COPY ./vhosts/media-openorchestra-12.conf /etc/apache2/sites-available/media-openorchestra-12.conf
+
 COPY ./ini/mongo.ini /etc/php5/mods-available/
 COPY ./ini/imagick.ini /etc/php5/mods-available/
 COPY ./ini/symfony.ini /etc/php5/mods-available/
@@ -28,9 +29,9 @@ RUN php5enmod symfony
 RUN php5enmod xdebug
 RUN printf "\n"
 
-RUN a2ensite back-openorchestra.conf
-RUN a2ensite front-openorchestra.conf
-RUN a2ensite media-openorchestra.conf
+RUN a2ensite back-openorchestra-12.conf
+RUN a2ensite front-openorchestra-12.conf
+RUN a2ensite media-openorchestra-12.conf
 
 RUN usermod -u 1000 www-data
 RUN chown www-data:www-data /var/www
