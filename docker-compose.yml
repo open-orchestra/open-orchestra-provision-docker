@@ -1,23 +1,47 @@
-dockerui:
-    image: abh1nav/dockerui
-    container_name: dockerui_open_orchestra
-    restart: always
+version: '2'
+
+services:
+  oo_code:
+      image: debian:jessie
+      volumes:
+          - ../open-orchestra:/var/www/openorchestra
+          - ../open-orchestra-front-demo/:/var/www/front-openorchestra
+          - ../open-orchestra-media-demo/:/var/www/media-openorchestra
+          - ../uploaded-files:/var/www/uploaded-files
+      container_name: oo_code
+
+  oo_mongo:
+    image: mongo:3.0
+    ports:
+      - 27017:27017
+    container_name: oo_mongo
     volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-        - 5000:9000
-mongo-express:
-    image: levino/mongo-express
-    container_name: mongoexpress_open_orchestra
-    ports:
-        - 8081:8081
-    links:
-        - mongo:mongo
-redis-commander:
-    image: tenstartups/redis-commander
-    container_name: rediscommander_open_orchestra
-    links:
-        - redis:redis
-    command: --redis-host redis
-    ports:
-        - 8082:8081
+        - ../data/db:/data/db
+
+  oo_apache_php:
+      build: apache-php
+      volumes_from:
+          - oo_code
+      ports:
+        - 80:80
+      container_name: oo_apache_php
+
+  oo_elasticsearch:
+      build: elasticsearch
+      ports:
+          - 9200:9200
+      container_name: oo_elasticsearch
+      volumes:
+          - ../data/els:/usr/share/elasticsearch/data
+
+  oo_varnish:
+      image: million12/varnish
+      volumes:
+        - ./varnish/default.vcl:/etc/varnish/default.vcl
+      environment:
+        - VARNISHD_PARAMS=-a :6081
+      expose:
+        - 6081
+      ports:
+        - 6081:6081
+      container_name: oo_varnish
