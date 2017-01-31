@@ -1,4 +1,14 @@
 #generate sitemap
 0 2 * * * root php /var/www/front-openorchestra/app/console -e=prod orchestra:sitemaps:generate 1> /dev/null
 #generate robots.txt
-0 2 * * * root php /var/www/front-openorchestra/app/console -e=prod orchestra:robots:generate 1> /dev/null
+15 2 * * * root php /var/www/front-openorchestra/app/console -e=prod orchestra:robots:generate 1> /dev/null
+#generate error pages
+30 2 * * * root php /var/www/front-openorchestra/app/console -e=prod orchestra:errorpages:generate 1> /dev/null
+#auto publish node
+0 3 * * * root php /var/www/openorchestra/app/console -e=prod orchestra:publish:node 1> /dev/null
+#auto unpublish node
+30 3 * * * root php /var/www/openorchestra/app/console -e=prod orchestra:unpublish:node 1> /dev/null
+#auto publish content
+0 4 * * * root php /var/www/openorchestra/app/console -e=prod orchestra:publish:content 1> /dev/null
+#auto unpublish content
+30 4 * * * root php /var/www/openorchestra/app/console -e=prod orchestra:unpublish:content 1> /dev/null
