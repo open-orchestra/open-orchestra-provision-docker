@@ -6,7 +6,6 @@ services:
       volumes:
           - ../open-orchestra:/var/www/openorchestra
           - ../open-orchestra-front-demo/:/var/www/front-openorchestra
-          - ../open-orchestra-media-demo/:/var/www/media-openorchestra
           - ../uploaded-files:/var/www/uploaded-files
       container_name: oo_code
 
