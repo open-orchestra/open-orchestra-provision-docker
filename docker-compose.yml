@@ -27,7 +27,7 @@ services:
       container_name: oo_apache_php
 
   oo_elasticsearch:
-      build: elasticsearch
+      image: elasticsearch
       ports:
           - 9200:9200
       container_name: oo_elasticsearch
