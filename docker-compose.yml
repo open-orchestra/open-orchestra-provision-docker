@@ -26,14 +26,13 @@ services:
       container_name: oo_apache_php
 
   oo_elasticsearch:
-      image: elasticsearch
+      image: elasticsearch:2.2.0
       ports:
           - 9200:9200
       container_name: oo_elasticsearch
-      depends_on:
-          - "oo_apache_php"
       volumes:
           - ../data/els:/usr/share/elasticsearch/data
+          - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
 
   oo_varnish:
       image: million12/varnish
@@ -46,3 +45,5 @@ services:
       ports:
         - 6081:6081
       container_name: oo_varnish
+      depends_on:
+          - oo_apache_php
