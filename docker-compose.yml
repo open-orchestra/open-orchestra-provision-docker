@@ -10,19 +10,19 @@ services:
       container_name: oo_code
 
   oo_mongo:
-    image: mongo:3.0
-    ports:
-      - 27017:27017
-    container_name: oo_mongo
-    volumes:
-        - ../data/db:/data/db
+      image: mongo:3.0
+      ports:
+          - 27017:27017
+      container_name: oo_mongo
+      volumes:
+          - ../data/db:/data/db
 
   oo_apache_php:
       build: apache-php
       volumes_from:
           - oo_code
       ports:
-        - 80:80
+          - 80:80
       container_name: oo_apache_php
 
   oo_elasticsearch:
@@ -30,6 +30,8 @@ services:
       ports:
           - 9200:9200
       container_name: oo_elasticsearch
+      depends_on:
+          - "oo_apache_php"
       volumes:
           - ../data/els:/usr/share/elasticsearch/data
 
