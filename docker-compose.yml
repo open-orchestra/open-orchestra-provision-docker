@@ -26,7 +26,10 @@ services:
       container_name: oo_apache_php
 
   oo_elasticsearch:
-      image: elasticsearch:2.2.0
+      image: docker.elastic.co/elasticsearch/elasticsearch:5.3.0
+      environment:
+        - xpack.security.enabled=false
+        - xpack.monitoring.enabled=false
       ports:
           - 9200:9200
       container_name: oo_elasticsearch
