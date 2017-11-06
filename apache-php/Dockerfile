@@ -1,4 +1,4 @@
-FROM eboraas/debian:jessie
+FROM eboraas/debian:stretch
 
 RUN apt-get update && apt-get -y install apache2 && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -14,9 +14,9 @@ EXPOSE 443
 
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
-RUN apt-get update && apt-get install -y php5 php5-cli php5-gd php5-curl php5-mcrypt php5-intl php5-dev php5-common libav-tools git && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y php7.0 php7.0-cli php7.0-common php7.0-curl php7.0-dev php7.0-gd php7.0-intl php7.0-mbstring php7.0-mcrypt libav-tools git && apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y imagemagick libmagickwand-dev pkg-config && apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN printf "\n" | pecl install mongo
+RUN printf "\n" | pecl install mongodb
 RUN printf "\n" | pecl install imagick
 RUN printf "\n" | pecl install xdebug
 
@@ -29,17 +29,17 @@ COPY ./vhosts/back-openorchestra-20.conf /etc/apache2/sites-available/back-openo
 COPY ./vhosts/front-openorchestra-20.conf /etc/apache2/sites-available/front-openorchestra-20.conf
 COPY ./vhosts/media-openorchestra-20.conf /etc/apache2/sites-available/media-openorchestra-20.conf
 
-COPY ./ini/mongo.ini /etc/php5/mods-available/
-COPY ./ini/imagick.ini /etc/php5/mods-available/
-COPY ./ini/symfony.ini /etc/php5/mods-available/
-COPY ./ini/xdebug.ini /etc/php5/mods-available/
+COPY ./ini/mongodb.ini /etc/php/7.0/mods-available/
+COPY ./ini/imagick.ini /etc/php/7.0/mods-available/
+COPY ./ini/symfony.ini /etc/php/7.0/mods-available/
+COPY ./ini/xdebug.ini /etc/php/7.0/mods-available/
 
 COPY ./cron/openorchestra /etc/cron.d/
 
-RUN php5enmod mongo
-RUN php5enmod imagick
-RUN php5enmod symfony
-RUN php5enmod xdebug
+RUN phpenmod mongodb
+RUN phpenmod imagick
+RUN phpenmod symfony
+RUN phpenmod xdebug
 RUN printf "\n"
 
 RUN a2ensite back-openorchestra-20.conf
