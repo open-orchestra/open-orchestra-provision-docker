@@ -2,7 +2,7 @@ version: '2'
 
 services:
   oo_code:
-      image: debian:jessie
+      image: debian:stretch
       volumes:
           - ../open-orchestra:/var/www/openorchestra
           - ../open-orchestra-front-demo/:/var/www/front-openorchestra
